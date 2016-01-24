@@ -1,0 +1,25 @@
+apply plugin: 'java'
+
+compileJava {
+    //noinspection GroovyUnusedAssignment
+    sourceCompatibility = JavaVersion.VERSION_1_7
+    //noinspection GroovyUnusedAssignment
+    targetCompatibility = JavaVersion.VERSION_1_7
+}
+
+configurations {
+    provided
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+
+    // Arch dependencies
+    provided 'com.google.dagger:dagger-compiler:2.0.2'
+    provided 'org.glassfish:javax.annotation:10.0-b28'
+    compile 'com.google.dagger:dagger:2.0.2'
+    compile 'io.reactivex:rxjava:1.1.0'
+
+    // Framework dependencies
+    compile 'org.projectlombok:lombok:1.16.6'
+}
