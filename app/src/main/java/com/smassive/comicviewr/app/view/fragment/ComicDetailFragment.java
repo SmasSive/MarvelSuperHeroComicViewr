@@ -15,6 +15,8 @@
  */
 package com.smassive.comicviewr.app.view.fragment;
 
+import com.google.common.base.Strings;
+
 import com.smassive.comicviewr.app.R;
 import com.smassive.comicviewr.app.injection.component.ComicsComponent;
 import com.smassive.comicviewr.app.model.ComicModel;
@@ -111,8 +113,17 @@ public class ComicDetailFragment extends BaseFragment {
 
     public void setComicInfo(ComicModel comicModel) {
         if (comicModel != null) {
-            comicTitle.setText(comicModel.getTitle());
-            comicDescription.setText(Html.fromHtml(comicModel.getDescription()));
+            String title = comicModel.getTitle();
+            if (Strings.isNullOrEmpty(title)) {
+                title = getString(R.string.error_no_title);
+            }
+            comicTitle.setText(title);
+
+            String description = comicModel.getDescription();
+            if (Strings.isNullOrEmpty(description)) {
+                description = getString(R.string.error_no_description);
+            }
+            comicDescription.setText(Html.fromHtml(description));
 
             Activity activity = this.getActivity();
 
@@ -123,13 +134,13 @@ public class ComicDetailFragment extends BaseFragment {
 
                 CollapsingToolbarLayout appBarLayout = (CollapsingToolbarLayout) activity.findViewById(R.id.toolbar_layout);
                 if (appBarLayout != null) {
-                    appBarLayout.setTitle(comicModel.getTitle());
+                    appBarLayout.setTitle(title);
                     appBarLayout.setExpandedTitleColor(getResources().getColor(android.R.color.transparent));
                 }
             }
         } else {
-            comicTitle.setText(getString(R.string.error_comic));
-            comicDescription.setText("");
+            comicTitle.setText(getString(R.string.error_no_title));
+            comicDescription.setText(getString(R.string.error_comic));
         }
     }
 }
