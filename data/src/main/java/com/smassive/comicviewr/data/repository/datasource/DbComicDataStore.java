@@ -23,6 +23,8 @@ import android.content.Context;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import io.realm.Realm;
 import io.realm.RealmResults;
 import rx.Observable;
@@ -34,11 +36,9 @@ public class DbComicDataStore implements ComicDataStore {
 
     private Context context;
 
-    private Realm realm;
-
+    @Inject
     public DbComicDataStore(Context context) {
         this.context = context;
-        this.realm = Realm.getInstance(context);
     }
 
     /**
@@ -50,6 +50,7 @@ public class DbComicDataStore implements ComicDataStore {
      */
     @Override
     public Observable<List<ComicBo>> getComics(int characterId) {
+        Realm realm = Realm.getInstance(context);
         RealmResults<ComicVo> comicVos = realm.where(ComicVo.class).equalTo(ComicVo.FIELD_CHARACTER_ID, characterId).findAll();
         List<ComicBo> comicBos = ComicVoMapper.toBo(comicVos);
 
@@ -71,6 +72,7 @@ public class DbComicDataStore implements ComicDataStore {
      */
     @Override
     public Observable<ComicBo> getComic(int comicId) {
+        Realm realm = Realm.getInstance(context);
         ComicVo comicVo = realm.where(ComicVo.class).equalTo(ComicVo.PRIMARY_KEY, comicId).findFirst();
         ComicBo comicBo = ComicVoMapper.toBo(comicVo);
 

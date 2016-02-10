@@ -20,8 +20,6 @@ import com.smassive.comicviewr.data.repository.datasource.DbComicDataStore;
 import com.smassive.comicviewr.domain.bean.ComicBo;
 import com.smassive.comicviewr.domain.repository.ComicsRepository;
 
-import android.content.Context;
-
 import java.util.List;
 
 import javax.inject.Inject;
@@ -35,11 +33,14 @@ import rx.Observable;
 @Singleton
 public class ComicsRepositoryImpl implements ComicsRepository {
 
-    private final Context context;
+    private final DbComicDataStore localDataStore;
+
+    private final CloudComicDataStore remoteDataStore;
 
     @Inject
-    public ComicsRepositoryImpl(Context context) {
-        this.context = context;
+    public ComicsRepositoryImpl(DbComicDataStore localDataStore, CloudComicDataStore remoteDataStore) {
+        this.localDataStore = localDataStore;
+        this.remoteDataStore = remoteDataStore;
     }
 
     /**
@@ -52,9 +53,6 @@ public class ComicsRepositoryImpl implements ComicsRepository {
      */
     @Override
     public Observable<List<ComicBo>> getComics(int characterId, boolean refresh) {
-        DbComicDataStore localDataStore = new DbComicDataStore(context);
-        CloudComicDataStore remoteDataStore = new CloudComicDataStore(context);
-
         if (refresh) {
             return remoteDataStore.getComics(characterId);
         }
@@ -70,8 +68,6 @@ public class ComicsRepositoryImpl implements ComicsRepository {
      */
     @Override
     public Observable<ComicBo> getComic(int comicId) {
-        DbComicDataStore localDataStore = new DbComicDataStore(context);
-
         return localDataStore.getComic(comicId);
     }
 }

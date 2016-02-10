@@ -21,7 +21,6 @@ import com.smassive.comicviewr.app.model.mapper.ComicModelMapper;
 import com.smassive.comicviewr.app.view.fragment.ComicDetailFragment;
 import com.smassive.comicviewr.domain.bean.ComicBo;
 import com.smassive.comicviewr.domain.interactor.GetComicUseCase;
-import com.smassive.comicviewr.domain.interactor.UseCase;
 
 import android.support.annotation.NonNull;
 import android.util.Log;
@@ -46,12 +45,12 @@ public class ComicDetailPresenter implements Presenter {
 
     private ComicDetailFragment view;
 
-    private final UseCase getComicUseCase;
+    private final GetComicUseCase getComicUseCase;
 
     private ComicModel model;
 
     @Inject
-    public ComicDetailPresenter(@Named("getComic") UseCase getComicUseCase) {
+    public ComicDetailPresenter(@Named("getComic") GetComicUseCase getComicUseCase) {
         this.getComicUseCase = getComicUseCase;
     }
 
@@ -60,9 +59,7 @@ public class ComicDetailPresenter implements Presenter {
     }
 
     public void getComic(int comicId) {
-        if (getComicUseCase instanceof GetComicUseCase) {
-            ((GetComicUseCase) getComicUseCase).execute(comicId, new GetComicSubscriber());
-        }
+        getComicUseCase.execute(comicId, new GetComicSubscriber());
     }
 
     public String getRandomImageUrl(ComicModel model) {

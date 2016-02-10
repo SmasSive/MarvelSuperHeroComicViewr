@@ -16,7 +16,6 @@
 package com.smassive.comicviewr.domain.interactor;
 
 import com.smassive.comicviewr.domain.executor.PostExecutionThread;
-import com.smassive.comicviewr.domain.executor.ThreadExecutor;
 import com.smassive.comicviewr.domain.repository.ComicsRepository;
 
 import javax.inject.Inject;
@@ -36,9 +35,8 @@ public class GetComicsUseCase extends UseCase {
     private boolean refresh;
 
     @Inject
-    public GetComicsUseCase(ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread,
-            ComicsRepository comicsRepository) {
-        super(threadExecutor, postExecutionThread);
+    public GetComicsUseCase(PostExecutionThread postExecutionThread, ComicsRepository comicsRepository) {
+        super(postExecutionThread);
         this.comicsRepository = comicsRepository;
     }
 

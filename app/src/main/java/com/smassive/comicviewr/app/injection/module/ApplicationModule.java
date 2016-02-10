@@ -17,10 +17,8 @@ package com.smassive.comicviewr.app.injection.module;
 
 import com.smassive.comicviewr.app.AndroidApplication;
 import com.smassive.comicviewr.app.UIThread;
-import com.smassive.comicviewr.data.executor.JobExecutor;
 import com.smassive.comicviewr.data.repository.ComicsRepositoryImpl;
 import com.smassive.comicviewr.domain.executor.PostExecutionThread;
-import com.smassive.comicviewr.domain.executor.ThreadExecutor;
 import com.smassive.comicviewr.domain.repository.ComicsRepository;
 
 import android.content.Context;
@@ -45,12 +43,6 @@ public class ApplicationModule {
     @Singleton
     Context provideApplicationContext() {
         return this.application;
-    }
-
-    @Provides
-    @Singleton
-    ThreadExecutor provideThreadExecutor(JobExecutor jobExecutor) {
-        return jobExecutor;
     }
 
     @Provides

@@ -16,9 +16,10 @@
 package com.smassive.comicviewr.app.injection.module;
 
 import com.smassive.comicviewr.app.injection.PerActivity;
+import com.smassive.comicviewr.data.repository.datasource.CloudComicDataStore;
+import com.smassive.comicviewr.data.repository.datasource.DbComicDataStore;
 import com.smassive.comicviewr.domain.interactor.GetComicUseCase;
 import com.smassive.comicviewr.domain.interactor.GetComicsUseCase;
-import com.smassive.comicviewr.domain.interactor.UseCase;
 
 import javax.inject.Named;
 
@@ -34,14 +35,26 @@ public class ComicsModule {
     @Provides
     @PerActivity
     @Named("getComics")
-    UseCase provideGetComics(GetComicsUseCase getComicsUseCase) {
+    GetComicsUseCase provideGetComics(GetComicsUseCase getComicsUseCase) {
         return getComicsUseCase;
     }
 
     @Provides
     @PerActivity
     @Named("getComic")
-    UseCase provideGetComic(GetComicUseCase getComicUseCase) {
+    GetComicUseCase provideGetComic(GetComicUseCase getComicUseCase) {
         return getComicUseCase;
+    }
+
+    @Provides
+    @PerActivity
+    DbComicDataStore provideDbComicDataStore(DbComicDataStore dbComicDataStore) {
+        return dbComicDataStore;
+    }
+
+    @Provides
+    @PerActivity
+    CloudComicDataStore provideCloudComicDataStore(CloudComicDataStore cloudComicDataStore) {
+        return cloudComicDataStore;
     }
 }

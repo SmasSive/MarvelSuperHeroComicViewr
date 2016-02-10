@@ -19,7 +19,6 @@ import com.smassive.comicviewr.app.injection.module.ApplicationModule;
 import com.smassive.comicviewr.app.navigation.Navigator;
 import com.smassive.comicviewr.app.view.activity.BaseActivity;
 import com.smassive.comicviewr.domain.executor.PostExecutionThread;
-import com.smassive.comicviewr.domain.executor.ThreadExecutor;
 import com.smassive.comicviewr.domain.repository.ComicsRepository;
 
 import android.content.Context;
@@ -38,8 +37,6 @@ public interface ApplicationComponent {
 
     //Exposed to sub-graphs.
     Context context();
-
-    ThreadExecutor threadExecutor();
 
     PostExecutionThread postExecutionThread();
 

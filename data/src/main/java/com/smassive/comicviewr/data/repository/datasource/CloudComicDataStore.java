@@ -28,6 +28,9 @@ import android.content.Context;
 
 import java.util.List;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
 import io.realm.Realm;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -40,12 +43,14 @@ import rx.functions.Action1;
 /**
  * Implementation of {@link ComicDataStore} which represents the remote data stored in the cloud.
  */
+@Singleton
 public class CloudComicDataStore implements ComicDataStore {
 
     private Context context;
 
     private ComicApiService comicApiService;
 
+    @Inject
     public CloudComicDataStore(Context context) {
         this.context = context;
 

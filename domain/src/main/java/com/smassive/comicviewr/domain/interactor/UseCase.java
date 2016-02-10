@@ -16,7 +16,6 @@
 package com.smassive.comicviewr.domain.interactor;
 
 import com.smassive.comicviewr.domain.executor.PostExecutionThread;
-import com.smassive.comicviewr.domain.executor.ThreadExecutor;
 
 import rx.Observable;
 import rx.Subscriber;
@@ -33,15 +32,11 @@ import rx.subscriptions.Subscriptions;
  */
 public abstract class UseCase {
 
-    private final ThreadExecutor threadExecutor;
-
     private final PostExecutionThread postExecutionThread;
 
     private Subscription subscription = Subscriptions.empty();
 
-    protected UseCase(ThreadExecutor threadExecutor,
-            PostExecutionThread postExecutionThread) {
-        this.threadExecutor = threadExecutor;
+    protected UseCase(PostExecutionThread postExecutionThread) {
         this.postExecutionThread = postExecutionThread;
     }
 
@@ -58,7 +53,7 @@ public abstract class UseCase {
     @SuppressWarnings("unchecked")
     public void execute(Subscriber UseCaseSubscriber) {
         this.subscription = this.buildUseCaseObservable()
-                .subscribeOn(Schedulers.from(threadExecutor))
+                .subscribeOn(Schedulers.io())
                 .observeOn(postExecutionThread.getScheduler())
                 .subscribe(UseCaseSubscriber);
     }

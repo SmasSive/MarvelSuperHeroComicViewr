@@ -21,7 +21,6 @@ import com.smassive.comicviewr.app.model.mapper.ComicModelMapper;
 import com.smassive.comicviewr.app.view.activity.MainActivity;
 import com.smassive.comicviewr.domain.bean.ComicBo;
 import com.smassive.comicviewr.domain.interactor.GetComicsUseCase;
-import com.smassive.comicviewr.domain.interactor.UseCase;
 
 import android.support.annotation.NonNull;
 import android.util.Log;
@@ -43,12 +42,12 @@ public class ComicsPresenter implements Presenter {
 
     private MainActivity view;
 
-    private final UseCase getComicsUseCase;
+    private final GetComicsUseCase getComicsUseCase;
 
     private List<ComicModel> models;
 
     @Inject
-    public ComicsPresenter(@Named("getComics") UseCase getComicsUseCase) {
+    public ComicsPresenter(@Named("getComics") GetComicsUseCase getComicsUseCase) {
         this.getComicsUseCase = getComicsUseCase;
     }
 
@@ -57,9 +56,7 @@ public class ComicsPresenter implements Presenter {
     }
 
     public void getComics(int characterId, boolean refresh) {
-        if (getComicsUseCase instanceof GetComicsUseCase) {
-            ((GetComicsUseCase)getComicsUseCase).execute(characterId, refresh, new GetComicsSubscriber());
-        }
+        getComicsUseCase.execute(characterId, refresh, new GetComicsSubscriber());
     }
 
     private void setModels() {
