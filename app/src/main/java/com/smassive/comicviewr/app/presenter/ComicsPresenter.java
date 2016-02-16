@@ -56,6 +56,7 @@ public class ComicsPresenter implements Presenter {
     }
 
     public void getComics(int characterId, boolean refresh) {
+        view.startRefresh();
         getComicsUseCase.execute(characterId, refresh, new GetComicsSubscriber());
     }
 
